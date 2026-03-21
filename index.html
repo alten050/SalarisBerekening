@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salaris Berekening</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div>
+        <div class="brand-bar">
+          <div class="brand-lockup" aria-label="ICQ Talent Profs">
+            <div class="brand-mark" aria-hidden="true">
+              <span class="ring ring-dark"></span>
+              <span class="ring ring-light"></span>
+              <span class="ring ring-accent"></span>
+              <span class="brand-hole"></span>
+            </div>
+            <div class="brand-wordmark">
+              <span class="brand-icq">ICQ</span>
+              <span class="brand-talent">TALENT PROFS</span>
+            </div>
+          </div>
+        </div>
+        <p class="eyebrow">ICQ Talent Profs Salaris Tool</p>
+        <h1>Van uurtarief naar salaris, zonder rekenwerk in losse PDF's.</h1>
+        <p class="hero-copy">
+          Deze calculator is gebaseerd op jouw drie voorbeeldberekeningen. Je vult een uurtarief in,
+          kiest het aantal uren per week en past waar nodig de aannames aan.
+        </p>
+      </div>
+      <div class="hero-card">
+        <p class="hero-card-label">PDF Export</p>
+        <p class="hero-card-copy">
+          Maak vanuit de ingevulde gegevens direct een salarisberekening in PDF-vorm,
+          opgezet in dezelfde documentstijl als de oorspronkelijke voorbeelden.
+        </p>
+        <button class="pdf-button" id="generatePdfButton" type="button">Genereer salarisberekening PDF</button>
+        <p class="hero-card-footnote">De export opent een printvenster waarin je kunt kiezen voor ‘Opslaan als PDF’.</p>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel">
+        <div class="panel-heading">
+          <h2>Invoer</h2>
+          <p>Pas de opdrachtgegevens en aannames aan.</p>
+        </div>
+
+        <div class="input-grid">
+          <label>
+            <span>Naam kandidaat</span>
+            <input id="candidateName" type="text" value="Nieuwe kandidaat">
+          </label>
+          <label>
+            <span>Opdrachtgever</span>
+            <input id="clientName" type="text" value="Nieuwe opdrachtgever">
+          </label>
+          <label>
+            <span>Uurtarief kandidaat</span>
+            <input id="hourlyRate" type="number" min="0" step="0.01" value="90">
+          </label>
+          <label>
+            <span>Uren per week</span>
+            <input id="weeklyHours" type="number" min="1" step="0.1" value="32">
+          </label>
+          <label>
+            <span>Thuiswerkvergoeding p/m</span>
+            <input id="homeAllowance" type="number" min="0" step="0.01" value="20">
+          </label>
+          <label>
+            <span>Reiskostenvergoeding p/m</span>
+            <input id="travelAllowance" type="number" min="0" step="0.01" value="44">
+          </label>
+        </div>
+
+        <div class="panel-heading assumptions">
+          <h2>Aannames</h2>
+          <p>Deze percentages kun je zelf verfijnen per klant of cao.</p>
+        </div>
+
+        <div class="input-grid assumptions-grid">
+          <label>
+            <span>Reservering verlof/feestdagen %</span>
+            <input id="vacationReservePct" type="number" min="0" step="0.01" value="11.5">
+          </label>
+          <label>
+            <span>Vakantiegeld %</span>
+            <input id="holidayPayPct" type="number" min="0" step="0.01" value="8.33">
+          </label>
+          <label>
+            <span>13e maand %</span>
+            <input id="thirteenthMonthPct" type="number" min="0" step="0.01" value="8.33">
+          </label>
+          <label>
+            <span>Transitievergoeding %</span>
+            <input id="transitionPct" type="number" min="0" step="0.01" value="3.2">
+          </label>
+          <label>
+            <span>Werkgeverslasten %</span>
+            <input id="employerBurdenPct" type="number" min="0" step="0.01" value="39.2">
+          </label>
+          <label>
+            <span>Werkgeverspensioen %</span>
+            <input id="employerPensionPct" type="number" min="0" step="0.01" value="8.45">
+          </label>
+          <label>
+            <span>Werknemerspensioen inhouding %</span>
+            <input id="employeePensionPct" type="number" min="0" step="0.01" value="3.98">
+          </label>
+          <label>
+            <span>Payroll/overhead %</span>
+            <input id="payrollFeePct" type="number" min="0" step="0.01" value="5.2">
+          </label>
+          <label>
+            <span>Effectieve loonheffing %</span>
+            <input id="taxPct" type="number" min="0" step="0.01" value="32.9">
+          </label>
+        </div>
+      </section>
+
+      <section class="panel results-panel">
+        <div class="panel-heading">
+          <h2>Resultaat</h2>
+          <p>Indicatie per maand op basis van de ingevulde waarden.</p>
+        </div>
+
+        <div class="summary-card">
+          <p class="summary-label" id="summaryName">Nieuwe kandidaat</p>
+          <h3 id="summaryTitle">Indicatieve salarisberekening</h3>
+          <p class="summary-meta" id="summaryMeta">Nieuwe opdrachtgever · 32 uur per week</p>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card accent">
+            <span>Bruto uurloon</span>
+            <strong id="grossHourlyWage">€ 0,00</strong>
+          </article>
+          <article class="stat-card">
+            <span>Bruto salaris p/m</span>
+            <strong id="grossSalary">€ 0,00</strong>
+          </article>
+          <article class="stat-card">
+            <span>All-in bruto p/m</span>
+            <strong id="grossAllIn">€ 0,00</strong>
+          </article>
+          <article class="stat-card success">
+            <span>Netto indicatie p/m</span>
+            <strong id="netSalary">€ 0,00</strong>
+          </article>
+        </div>
+
+        <div class="breakdown-grid">
+          <article class="breakdown-card">
+            <h3>Budget</h3>
+            <dl>
+              <div><dt>Uren p/m incl reservering</dt><dd id="monthlyHoursInclusive">0,00</dd></div>
+              <div><dt>Uren p/m reservering</dt><dd id="monthlyReserveHours">0,00</dd></div>
+              <div><dt>Uren p/m verloning</dt><dd id="monthlyHoursExclusive">0,00</dd></div>
+              <div><dt>Budget incl reservering</dt><dd id="budgetInclusive">€ 0,00</dd></div>
+              <div><dt>Budget reservering</dt><dd id="budgetReserve">€ 0,00</dd></div>
+              <div><dt>Budget verloning</dt><dd id="budgetExclusive">€ 0,00</dd></div>
+            </dl>
+          </article>
+
+          <article class="breakdown-card">
+            <h3>Bruto opbouw</h3>
+            <dl>
+              <div><dt>Salaris</dt><dd id="salaryBase">€ 0,00</dd></div>
+              <div><dt>Vakantiegeld</dt><dd id="holidayPay">€ 0,00</dd></div>
+              <div><dt>13e maand</dt><dd id="thirteenthMonth">€ 0,00</dd></div>
+              <div><dt>Transitievergoeding</dt><dd id="transitionPay">€ 0,00</dd></div>
+              <div><dt>Pensioeninhouding werknemer</dt><dd id="employeePension">€ 0,00</dd></div>
+              <div><dt>Loonheffing</dt><dd id="taxAmount">€ 0,00</dd></div>
+            </dl>
+          </article>
+
+          <article class="breakdown-card">
+            <h3>Werkgeverskosten</h3>
+            <dl>
+              <div><dt>Werkgeverslasten</dt><dd id="employerBurden">€ 0,00</dd></div>
+              <div><dt>Werkgeverspensioen</dt><dd id="employerPension">€ 0,00</dd></div>
+              <div><dt>Payroll/overhead</dt><dd id="payrollFee">€ 0,00</dd></div>
+              <div><dt>Thuiswerkvergoeding</dt><dd id="homeAllowanceOut">€ 0,00</dd></div>
+              <div><dt>Reiskostenvergoeding</dt><dd id="travelAllowanceOut">€ 0,00</dd></div>
+              <div><dt>Totale werkgeverskosten</dt><dd id="totalEmployerCost">€ 0,00</dd></div>
+            </dl>
+          </article>
+        </div>
+
+        <p class="disclaimer">
+          Dit is een indicatieve tool. De PDF’s laten zien dat de uitkomst sterk afhangt van pensioenregeling,
+          werkgeverslasten, loonheffing en vergoedingen. Gebruik de aannames dus als stuurknoppen, niet als definitieve loonstrook.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
