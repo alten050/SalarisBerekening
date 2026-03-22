@@ -27,21 +27,23 @@
             </div>
           </div>
         </div>
-        <p class="eyebrow">ICQ Talent Profs Salaris Tool</p>
-        <h1>Van uurtarief naar salaris, zonder rekenwerk in losse PDF's.</h1>
+        <div class="hero-intro">
+          <p class="eyebrow">ICQ Talent Profs Salaris Tool</p>
+          <div class="hero-status">Interne calculatieomgeving</div>
+        </div>
         <p class="hero-copy">
-          Deze calculator is gebaseerd op jouw drie voorbeeldberekeningen. Je vult een uurtarief in,
-          kiest het aantal uren per week en past waar nodig de aannames aan.
+          Bereken snel een indicatieve salarisopbouw op basis van uurtarief, contractomvang,
+          werkgeverslasten, pensioen en vergoedingen.
         </p>
       </div>
       <div class="hero-card">
-        <p class="hero-card-label">PDF Export</p>
+        <p class="hero-card-label">Export</p>
         <p class="hero-card-copy">
-          Maak vanuit de ingevulde gegevens direct een salarisberekening in PDF-vorm,
+          Sla vanuit de ingevulde gegevens direct een salarisberekening op,
           opgezet in dezelfde documentstijl als de oorspronkelijke voorbeelden.
         </p>
-        <button class="pdf-button" id="generatePdfButton" type="button">Genereer salarisberekening PDF</button>
-        <p class="hero-card-footnote">De export opent een printvenster waarin je kunt kiezen voor ‘Opslaan als PDF’.</p>
+        <button class="pdf-button" id="generatePdfButton" type="button">Sla PDF op</button>
+        <p class="hero-card-footnote">De export wordt direct als PDF gedownload, zonder preview of extra venster.</p>
       </div>
     </header>
 
@@ -85,39 +87,39 @@
         </div>
 
         <div class="input-grid assumptions-grid">
-          <label>
+          <label class="assumption-field">
             <span>Reservering verlof/feestdagen %</span>
             <input id="vacationReservePct" type="number" min="0" step="0.01" value="11.5">
           </label>
-          <label>
+          <label class="assumption-field">
             <span>Vakantiegeld %</span>
             <input id="holidayPayPct" type="number" min="0" step="0.01" value="8.33">
           </label>
-          <label>
+          <label class="assumption-field">
             <span>13e maand %</span>
             <input id="thirteenthMonthPct" type="number" min="0" step="0.01" value="8.33">
           </label>
-          <label>
+          <label class="assumption-field">
             <span>Transitievergoeding %</span>
             <input id="transitionPct" type="number" min="0" step="0.01" value="3.2">
           </label>
-          <label>
+          <label class="assumption-field">
             <span>Werkgeverslasten %</span>
             <input id="employerBurdenPct" type="number" min="0" step="0.01" value="39.2">
           </label>
-          <label>
+          <label class="assumption-field">
             <span>Werkgeverspensioen %</span>
             <input id="employerPensionPct" type="number" min="0" step="0.01" value="8.45">
           </label>
-          <label>
+          <label class="assumption-field">
             <span>Werknemerspensioen inhouding %</span>
             <input id="employeePensionPct" type="number" min="0" step="0.01" value="3.98">
           </label>
-          <label>
+          <label class="assumption-field">
             <span>Payroll/overhead %</span>
-            <input id="payrollFeePct" type="number" min="0" step="0.01" value="5.2">
+            <input id="payrollFeePct" type="number" min="0" step="0.01" value="0">
           </label>
-          <label>
+          <label class="assumption-field">
             <span>Effectieve loonheffing %</span>
             <input id="taxPct" type="number" min="0" step="0.01" value="32.9">
           </label>
@@ -201,6 +203,21 @@
     </main>
   </div>
 
+  <div class="info-modal" id="infoModal" hidden>
+    <div class="info-modal-backdrop" data-info-close></div>
+    <section class="info-modal-card" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+      <button class="info-modal-close" id="infoModalClose" type="button" aria-label="Sluit uitlegvenster">&times;</button>
+      <p class="info-modal-kicker">Veldtoelichting</p>
+      <h3 id="infoModalTitle">Uitleg</h3>
+      <p class="info-modal-body" id="infoModalBody"></p>
+      <div class="info-modal-sources" id="infoModalSources" hidden>
+        <p class="info-modal-sources-title">Bronnen</p>
+        <ul id="infoModalSourcesList"></ul>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="./script.js"></script>
 </body>
 </html>
